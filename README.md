@@ -1,16 +1,6 @@
 # Conway's Game of Life
 
-<!-- blank line -->
-<figure class="video_container">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/CgOcEZinQ2I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</figure>
-<!-- blank line -->
-
-<!-- blank line -->
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/CgOcEZinQ2I" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-<!-- blank line -->
+For a quick review of what Conway's Game of Life is, I suggest checking out [Stephen Hawkings The Meaning of Life (John Conway's Game of Life segment)](https://youtu.be/CgOcEZinQ2I) on YouTube.
 
 ## Rules for Conway's Game of Life
 Conway's the Game of Life is a generative type of application, where we enter patterns into a grid. We start this pattern-generating based on only four rules for controlling the grid.
