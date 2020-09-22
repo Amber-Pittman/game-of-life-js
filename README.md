@@ -12,4 +12,3 @@ Conway's the Game of Life is a generative type of application, where we enter pa
 3.  Death by overcrowding: Each live cell with four or more live neighbors will die in the next generation.
 
 4.  Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.
-
