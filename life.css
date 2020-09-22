@@ -1,0 +1,27 @@
+body {
+    padding: 20px;
+    background-color: aliceblue;
+}
+
+#gridContainer {
+    padding-bottom: 10px;
+}
+
+table {
+    background-color: #ff1ac6;
+    border-spacing: 0px;
+}
+
+td {
+    border: 1px solid #1a0013;
+    width: 20px;
+    height: 20px;
+}
+
+td.dead {
+    background-color: transparent;
+}
+
+td.live {
+    background-color: #ffe6f9;
+}
