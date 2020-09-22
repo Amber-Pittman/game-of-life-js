@@ -1,6 +1,6 @@
 body {
     padding: 20px;
-    background-color: #444;
+    background-color: aliceblue;
 }
 
 #gridContainer {
@@ -8,12 +8,12 @@ body {
 }
 
 table {
-    background-color: gray;
+    background-color: #ff1ac6;
     border-spacing: 0px;
 }
 
 td {
-    border: 1px solid #5a5a5a;
+    border: 1px solid #1a0013;
     width: 20px;
     height: 20px;
 }
@@ -23,5 +23,5 @@ td.dead {
 }
 
 td.live {
-    background-color: white;
+    background-color: #ffe6f9;
 }
