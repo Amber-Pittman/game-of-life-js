@@ -145,6 +145,103 @@ function startButtonHandler() {
 
 function play() {
     console.log("Play the game");
+    computeNextGen();
+}
+
+/* This function drives the computation by taking one cell in the grid and passing it to applyRules. */
+function computeNextGen() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            applyRules(i,j);
+        }
+    }
+}
+
+/* RULES
+1. Any live cell with fewer than two live neighbors dies, as if caused by under-population.
+2. Any live cell with two or three live neighbors lives on to the next generation.
+3. Any live cell with more than three live neighbors dies, as if by overcrowding.
+4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction. */
+
+/* This function knows how to apply the rules of the game to a single cell. */
+function applyRules(row, column) {
+    let numNeighbors = countNeighbors(row, column);
+    // check to see if current cell is alive or dead - Alive: 1 Dead: 0
+    // The updated state is stored in the nextGrid array
+    if (grid[row][column] == 1) {
+        // if cell neighbors are less than 2, cell dies
+        if (numNeighbors < 2) {
+            nextGrid[row][column] = 0;
+        }   // if cell neighbor count is 2 or 3, cell lives
+            else if (numNeighbors == 2 || numNeighbors == 3) {
+            nextGrid[row][column] = 1;
+        }   // if cell neighbor count is 4 or more, cell dies
+            else if (numNeighbors > 3) {
+            nextGrid[row][column] = 0
+        }
+    } else if (grid[row][column] == 0) { // checking count when cell is dead
+        if (numNeighbors == 3) {
+            // if cell neighbors are exactly 3, cell comes back to life
+            nextGrid[row][column] = 1;
+        }
+    }
+}
+
+/* This countNeighbors function is a helper function that counts the number of live neighbor cells a cell has. 
+
+Passing in the row and column of the cell we're checking and we'll use the local variable, count, to keep track of the number of live neighbors that the cell has. While straightforward, there are a lot of edge cases that need to be checked.  
+
+If the cell is on the edge of the grid or in the corner of the grid, we need to keep in mind that it won't have 8 neighbors like all the cells in the middle of the grid have. 
+
+Check to make sure that each neighbor of a cell exists before we check the cell itself.  */
+function countNeighbors(row, column) {
+    let count = 0;
+
+    // check the neighbor above in the same column
+    if (row - 1 >= 0) {
+        // if neighbor exists & is alive, we increase the count
+        if (grid[row - 1][column] == 1) count++;
+    }
+
+    // check the neighbor to the upper left corner of the cell; this cell cannot be anywhere in either the first row or the first column
+    if (row - 1 >= 0 && column - 1 >= 0) {
+        // if upper left neighbor is alive, increase the count
+        if (grid[row - 1][column - 1] == 1) count++;
+    }
+
+    // upper right of the current cell; the row must be greater than 0 & the column + 1 must be less than the number of columns in the grid
+    // the cell can't be anywhere in the first row or in the last column of the grid
+    if (row - 1 >= 0 && column + 1 < columns) {
+        if (grid[row - 1][column + 1] == 1) count++;
+    }
+
+    // Check neighbors to the left
+    if (column - 1 >= 0) {
+        if (grid[row][column - 1] == 1) count++
+    }
+
+    // Check neighbors to the right
+    if (column + 1 < columns) {
+        if (grid[row][column + 1] == 1) count++
+    }
+
+    // Check neighbors directly below the cell
+    if (row + 1 < rows) {
+        if (grid[row + 1][column] == 1) count++;
+    }
+    
+    // Check the neighbors below to the lower left of the cell
+    if (row + 1 < rows && column - 1 >= 0) {
+        if (grid[row + 1][column - 1] == 1) count++
+    }
+    
+    // Check the neighbors below to the lower right of the cell
+    if (row + 1 < rows && column + 1 < columns) {
+        if (grid[row + 1][column + 1] == 1) count++;
+    }
+    
+
+    return count;
 }
 
 // Start Everything
