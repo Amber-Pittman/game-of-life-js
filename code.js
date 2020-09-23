@@ -7,6 +7,10 @@ let playing = false;
 let grid = new Array(rows);
 let nextGrid = new Array(rows)
 
+let timer;
+// reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
+let reproductionTime = 100; // 500 ms to for dev purposes; speed up to 100 later
+
 // Initialize both grids that will add an array to each item in both grids
 function initializeGrids() {
     // since both grids are the same size, we can do this in one single loop
@@ -158,6 +162,8 @@ function startButtonHandler() {
         console.log("Pause the game");
         playing = false;
         this.innerHTML = "Continue";
+        // play() stops getting called then clears the timer
+        clearTimeout(timer);
     } else {
         // otherwise, the button will say pause the game
         console.log("Continue the game");
@@ -170,6 +176,13 @@ function startButtonHandler() {
 function play() {
     console.log("Play the game");
     computeNextGen();
+
+    // without this, the play button only goes 1 round
+    // This block - play() calls itself by using a timer
+    if (playing) { // check if game is actively running
+        // create and set timer
+        timer = setTimeout(play, reproductionTime); //setTimeout(function, timeDelayBeforeCallingTheFunc)
+    }
 }
 
 /* This function drives the computation by taking one cell in the grid and passing it to applyRules. 
