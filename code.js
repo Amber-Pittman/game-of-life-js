@@ -22,8 +22,18 @@ function resetGrids() {
     // loop over every row and column in both grids & sets both i and j to 0
     // resets both grids to all dead cells
     for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < rows; j++) {
+        for (let j = 0; j < columns; j++) {
             grid[i][j] = 0;
+            nextGrid[i][j] = 0;
+        }
+    }
+}
+
+/* Once we've gone through every row and every column, we copy the new state values in the nextGrid array back into grid so that it becomes the current state. It also resets nextGrid to all zeros so that it's a clean slate for another new state. */
+function copyAndResetGrid() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            grid[i][j] = nextGrid[i][j];
             nextGrid[i][j] = 0;
         }
     }
@@ -106,6 +116,20 @@ function cellClickHandler() {
     }
 }
 
+// Update the view
+/* updateView looks through every cell in the grid array, which contains the current state of the game (the state we just copied from next grid), and updates the view. That is, the view is the table in the page with that state. It's done by updating the class attr on the cells in the table. */
+function updateView() {
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            let cell = document.getElementById(i + "_" + j);
+            if (grid[i][j] == 0) {
+                cell.setAttribute("class", "dead");
+            } else {
+                cell.setAttribute("class", "live");
+            }
+        }
+    }
+}
 
 function setupControlButtons() {
     // button to start
@@ -148,13 +172,21 @@ function play() {
     computeNextGen();
 }
 
-/* This function drives the computation by taking one cell in the grid and passing it to applyRules. */
+/* This function drives the computation by taking one cell in the grid and passing it to applyRules. 
+
+Iterate through all the cells in the grid state and call the applyRules function on each cell to apply the rules of the game and save the next generation of cells in the nextGrid array. 
+*/
 function computeNextGen() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
             applyRules(i,j);
         }
     }
+
+    // copy nextGrid to grid then reset nextGrid
+    copyAndResetGrid();
+    // copy all 1 values to "live" in the table
+    updateView();
 }
 
 /* RULES
