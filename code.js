@@ -1,5 +1,5 @@
-let rows = 25;
-let columns = 40;
+let rows = 40;
+let columns = 60;
 
 // keep track of whether or not the game is playing
 let playing = false;
@@ -9,7 +9,7 @@ let nextGrid = new Array(rows)
 
 let timer;
 // reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
-let reproductionTime = 100; // 500 ms to for dev purposes; speed up to 100 later
+let reproductionTime = 150; // 500 ms to for dev purposes; speed up to 100 later
 
 // Initialize both grids that will add an array to each item in both grids
 function initializeGrids() {
@@ -143,6 +143,25 @@ function setupControlButtons() {
     // button to clear
     let clearButton = document.getElementById("clear");
     clearButton.onclick = clearButtonHandler;
+
+    // button to choose random cells
+    let randomButton = document.getElementById("random");
+    randomButton.onclick = randomButtonHandler;
+}
+
+function randomButtonHandler() {
+    if (playing) return;
+    clearButtonHandler();
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            let isAlive = Math.round(Math.random());
+            if (isAlive == 1) {
+                let cell = document.getElementById(i + "_" + j);
+                cell.setAttribute("class", "live");
+                grid[i][j] = 1;
+            }
+        }
+    }
 }
 
 function clearButtonHandler() {
@@ -150,9 +169,27 @@ function clearButtonHandler() {
     /* we've cleared the game, meaning we're no longer playing so it needs to be set to false */
     playing = false;
     /* this is clear button rather than the start button; it clears the board and resets the start button */
-    let startButton = document.getElementById("start")
+    let startButton = document.getElementById("start");
     // set the start button's state to Start when Clear is clicked on
     startButton.innerHTML = "Start";
+
+    // To get the clear btn to actually clear the board, clear the timer
+    // prevents play() from being called again; stops the game
+    clearTimeout(timer);
+
+    // clear the grid in the view by changing every alive cell in the table to have the class "dead"; get all cells with the class "live"
+    let cellsList = document.getElementsByClassName("live"); // nodelist
+    // copy cells from the nodelist (cellsList) & push onto an array
+    let cells = [];
+    for (let i = 0; i < cellsList.length; i++) {
+        cells.push(cellsList[i]);
+    }
+    // iterate through the list of "live" cells and switch them to "dead"
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].setAttribute("class", "dead");
+    }
+    // reset both state arrays (grid and nextGrid) so that they both have zeros in ALL the cells
+    resetGrids();
 }
 
 function startButtonHandler() {
