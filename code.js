@@ -1,6 +1,6 @@
 const currentGen = document.querySelector(".current-gen");
-let rows = 40;
-let columns = 60;
+let rows = 25;
+let columns = 40;
 
 let genCount = 0;
 
@@ -8,7 +8,7 @@ let genCount = 0;
 let playing = false;
 // Set state of 2 grids - double-buffering
 let grid = new Array(rows);
-let nextGrid = new Array(rows)
+let nextGrid = new Array(rows);
 
 let timer;
 // reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
@@ -191,8 +191,8 @@ function changeGridWidth(width) {
 // when user wants to revert to original size of the grid
 function resetEntireGrid() {
     console.log("resetEntireGrid");
-    rows = 40;
-    columns = 60;
+    rows = 25;
+    columns = 40;
     const resetContainer = document.getElementById("gridContainer");
     resetContainer.removeChild(resetContainer.firstChild);
     console.log(resetContainer.childNodes);
@@ -212,6 +212,24 @@ function setupControlButtons() {
     // button to choose random cells
     let randomButton = document.getElementById("random");
     randomButton.onclick = randomButtonHandler;
+
+    // button to speed up
+    let speedBtn = document.getElementById("speed-btn")
+    speedBtn.onclick = speedBtnHandler;
+
+    // button to slow down
+    let slowDown = document.getElementById("slow-down")
+    slowDown.onclick = slowDownHandler;
+}
+
+function slowDownHandler() {
+    console.log("Slowing down by 50 increments");
+    reproductionTime += 50;
+}
+
+function speedBtnHandler() {
+    console.log("Speeding up by 50 increments");
+    reproductionTime -= 50;
 }
 
 function randomButtonHandler() {
