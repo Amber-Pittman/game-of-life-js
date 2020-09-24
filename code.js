@@ -1,5 +1,8 @@
+const currentGen = document.querySelector(".current-gen");
 let rows = 40;
 let columns = 60;
+
+let genCount = 0;
 
 // keep track of whether or not the game is playing
 let playing = false;
@@ -10,6 +13,34 @@ let nextGrid = new Array(rows)
 let timer;
 // reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
 let reproductionTime = 150; // 500 ms to for dev purposes; speed up to 100 later
+
+
+// allow user to change height of grid with btn click
+const heightBtn = document.getElementById("gridHeight");
+heightBtn.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const height = document.getElementById("height").value;
+    console.log(height);
+    console.log(event.target.value);
+    changeGridHeight(height)
+})
+
+// allow user to change height of grid with btn click
+const widthBtn = document.getElementById("gridWidth");
+widthBtn.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const width = document.getElementById("width").value;
+    console.log(width);
+    console.log(event.target.value);
+    changeGridWidth(width);
+})
+
+// allow user to reset the grid to original size with btn click
+const resetBtn = document.getElementsByClassName("reset");
+resetBtn[0].addEventListener("click", function(event) {
+    event.preventDefault();
+    resetEntireGrid();
+})
 
 // Initialize both grids that will add an array to each item in both grids
 function initializeGrids() {
@@ -133,6 +164,40 @@ function updateView() {
             }
         }
     }
+}
+
+// when user changes height of grid, this resets the grid and creates a new view
+function changeGridHeight(height) {
+    console.log("changeGridHeight", height);
+    rows = height;
+    const resetContainer = document.getElementById("gridContainer");
+    resetContainer.removeChild(resetContainer.firstChild);
+    console.log(resetContainer.childNodes);
+    console.log(rows);
+    createTable();
+}
+
+// when user changes width of grid, this resets the grid's width and creates new view
+function changeGridWidth(width) {
+    console.log("changeGridWidth", height);
+    columns = width;
+    const resetContainer = document.getElementById("gridContainer");
+    resetContainer.removeChild(resetContainer.firstChild);
+    console.log(resetContainer.childNodes);
+    console.log(columns);
+    createTable();
+}
+
+// when user wants to revert to original size of the grid
+function resetEntireGrid() {
+    console.log("resetEntireGrid");
+    rows = 40;
+    columns = 60;
+    const resetContainer = document.getElementById("gridContainer");
+    resetContainer.removeChild(resetContainer.firstChild);
+    console.log(resetContainer.childNodes);
+    console.log(columns, rows);
+    createTable();
 }
 
 function setupControlButtons() {
