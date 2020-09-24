@@ -18,7 +18,7 @@ Conway's the Game of Life is a generative type of application, where we enter pa
 
 With the `heightBtn` and `widthBtn` variables, it allows resizing of the grids. If the user doesn't like the current size they customized with the other two buttons, they can click on the Reset button to return the grid to its original size of 25 rows x 40 columns.
 
-We set our game initial state to false as the game waits for the user to click Start. For the `reproductionTime`, it controls speed in which the cells are changing; it acts as a delay when we call the timer repeatedly.
+We set our game initial state to false as the game waits for the user to click Start. For the `reproductionTime`, it controls speed in which the cells are changing in milliseconds; it acts as a delay when we call the timer repeatedly.
 
 We double-buffer by creating 2 different grids (`grid` and `nextGrid`) that are being changed out with each regeneration. We initialize both grids that will add an array to each item in both grids. Since both grids are the same size, we can do this in one single loop. It loops over every row and add another array with the num of columns to that row in both grids.
 

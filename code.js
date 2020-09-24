@@ -77,7 +77,6 @@ function createTable() {
     const table = document.createElement("table");
     for (let i = 0; i < rows; i++) {
         const tr = document.createElement("tr");
-        // 
         for (let j = 0; j < columns; j++) {
             const cell = document.createElement("td");
             cell.setAttribute("id", i + "_" + j);
@@ -118,7 +117,6 @@ function updateView() {
     }
 }
 
-// 
 function changeGridHeight(height) {
     console.log("changeGridHeight", height);
     rows = height;
@@ -277,7 +275,6 @@ function pulsarHandler() {
 
 function clearButtonHandler() {
     console.log("Clear the game: stop playing, clear the grid");
-    /* w */
     playing = false;
     genCount = 0;
     const startButton = document.getElementById("start");
@@ -317,10 +314,8 @@ function play() {
     console.log(genCount);
     currentGen.innerHTML = `<h3 class="myGen">Current generation: ${genCount}</h3>`;
     computeNextGen();
-    // This block - play() calls itself by using a timer
-    if (playing) { // check if game is actively running
-        // create and set timer
-        timer = setTimeout(play, reproductionTime); //setTimeout(function, timeDelayBeforeCallingTheFunc)
+    if (playing) { 
+        timer = setTimeout(play, reproductionTime);
     }
 }
 
@@ -330,8 +325,8 @@ function computeNextGen() {
           applyRules(i, j);
         }
     }    
-    copyAndResetGrid(); // copy nextGrid to grid then reset nextGrid    
-    updateView(); // copy all 1 values to "live" in the table
+    copyAndResetGrid();
+    updateView();
 }
 
 /* RULES
