@@ -3,19 +3,31 @@ body {
     background-color: aliceblue;
 }
 
+h1 {
+    font-family: 'VT323', monospace;
+    font-size: 60px;
+    text-align: center;
+}
+
+p {
+    font-family: 'Noto Serif', serif;
+    /* font-family: 'Open Sans', sans-serif; */
+}
+
 #gridContainer {
-    padding-bottom: 10px;
+    padding-bottom: 10px;    
 }
 
 table {
     background-color: #ff1ac6;
     border-spacing: 0px;
+    margin: 0 auto;
 }
 
 td {
     border: 1px solid #1a0013;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
 }
 
 td.dead {
