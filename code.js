@@ -34,7 +34,6 @@ resetBtn[0].addEventListener("click", function (event) {
     resetEntireGrid();
 });
 
-// 
 function initializeGrids() {
     for (let i = 0; i < rows; i++) {
         grid[i] = new Array(columns);
@@ -370,38 +369,30 @@ function countNeighbors(row, column) {
         if (grid[row - 1][column - 1] == 1) count++;
     }
 
-    // upper right of the current cell; the row must be greater than 0 & the column + 1 must be less than the number of columns in the grid
-    // the cell can't be anywhere in the first row or in the last column of the grid
     if (row - 1 >= 0 && column + 1 < columns) {
         if (grid[row - 1][column + 1] == 1) count++;
     }
 
-    // Check neighbors to the left
     if (column - 1 >= 0) {
         if (grid[row][column - 1] == 1) count++;
     }
 
-    // Check neighbors to the right
     if (column + 1 < columns) {
         if (grid[row][column + 1] == 1) count++;
     }
 
-    // Check neighbors directly below the cell
     if (row + 1 < rows) {
         if (grid[row + 1][column] == 1) count++;
     }
     
-    // Check the neighbors below to the lower left of the cell
     if (row + 1 < rows && column - 1 >= 0) {
         if (grid[row + 1][column - 1] == 1) count++;
     }
     
-    // Check the neighbors below to the lower right of the cell
     if (row + 1 < rows && column + 1 < columns) {
         if (grid[row + 1][column + 1] == 1) count++;
     }
     
-
     return count;
 }
 

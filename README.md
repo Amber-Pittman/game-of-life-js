@@ -50,6 +50,14 @@ Speaking of `computeNextGen`, this function drives the computation by taking one
 
 The `applyRules` function is exactly what it sounds like. This function knows how to apply the rules of the game to a single cell. It checks to see if current cell is alive or dead - Alive: 1 Dead: 0. The updated state is stored in the nextGrid array. Here, we check for the number of neighbors of the current cell. If it's less than 2, the cell dies. If the cell has 2-3 neighbors, the cell lives. If the neighbor count is 4+, the cell dies. Now, when the cell is dead but it has 3 living neighbors, the dead cell "zombifies" itself and comes back to life. 
 
-This `countNeighbors` function found inside applyRules is a helper function that counts the number of live neighbor cells a cell has. Passing in the row and column of the cell we're checking and we'll use the local variable, count, to keep track of the number of live neighbors that the cell has. While straightforward, there are a lot of edge cases that need to be checked. If the cell is on the edge of the grid or in the corner of the grid, we need to keep in mind that it won't have 8 neighbors like all the cells in the middle of the grid have. Check to make sure that each neighbor of a cell exists before we check the cell itself.
+This `countNeighbors` function found inside applyRules is a helper function that counts the number of live neighbor cells a cell has. Passing in the row and column of the cell we're checking and we'll use the local variable, count, to keep track of the number of live neighbors that the cell has. While straightforward, there are a lot of edge cases that need to be checked. If the cell is on the edge of the grid or in the corner of the grid, we need to keep in mind that it won't have 8 neighbors like all the cells in the middle of the grid have. Check to make sure that each neighbor of a cell exists before we check the cell itself. We then return the count of the neighbors.
 1. Check the neighbor above in the same column. If neighbor exists & is alive, we increase the count
 2. Check the neighbor to the upper left corner of the cell; this cell cannot be anywhere in either the first row or the first column. If upper left neighbor is alive, increase the count.
+3. Check the upper right of the current cell; the row must be greater than 0 & the column + 1 must be less than the number of columns in the grid. The cell can't be anywhere in the first row or in the last column of the grid.
+4. Check neighbors directly to the left.
+5. Check neighbors directly to the right.
+6. Check neighbors directly below the current cell.
+7. Check the neighbors below to the lower left of the cell.
+8. Check the neighbors below to the lower right of the cell.
+
+And finally, we start everything on the page by initializing the window. 
