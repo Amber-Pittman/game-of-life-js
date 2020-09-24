@@ -17,36 +17,36 @@
             <!-- startup form to select grid size -->
         
             <div class="section-container">
-                <form id="gridHeight">
-                    <label for="height">Height: </label>
-                    <input type="number" id="height" name="height" min="25" max="90" />
-                    <button id="heightButton">Update</button>
-                </form>
-                <form id="gridWidth">
-                    <label for="width">Width <span>: </span> </label>
-                    <input type="number" id="width" name="width" min="25" max="90" />
-                    <button id="widthButton">Update</button>
-                </form>
-                <div class="resetButtonClass">
-                    <button class="reset">Reset Grid Size</button>
-                </div>
-        
-                <div id="gridContainer" class="yellow"></div>
+                    <form id="gridHeight">
+                        <label for="height">Height: </label>
+                        <input type="number" id="height" name="height" min="25" max="90" />
+                        <button id="heightButton">Update</button>
+                    </form>
+                    <form id="gridWidth">
+                        <label for="width">Width <span>: </span> </label>
+                        <input type="number" id="width" name="width" min="25" max="90" />
+                        <button id="widthButton">Update</button>
+                    </form>
+                    <div class="resetButtonClass">
+                        <button class="reset">Reset Grid Size</button>
+                    </div>
+            
+                    <div id="gridContainer" class="yellow"></div>
             </div>
             <!-- buttons for controlling grid activity -->
             <div class="controls">
-                <button id="start">Start</button>
-                <button id="clear">Clear</button>
-                <button id="random">Random</button>
-                <button id="speed-btn">Speed Up</button>
-                <button id="slow-down">Slow Down</button>                
-                <button id="glider">Glider</button>
-                <button id="pulsar">Pulsar</button>
-                <button id="gosper-gun">Gosper Gun</button>
+                    <button id="start">Start</button>
+                    <button id="clear">Clear</button>
+                    <button id="random">Random</button>
+                    <button id="speed-btn">Speed Up</button>
+                    <button id="slowdown">Slow Down</button>                
+                    <button id="glider">Glider</button>
+                    <button id="pulsar">Pulsar</button>
+                    <!-- <button id="gosper-gun">Gosper Gun</button> -->
             </div>
             <div class="current-gen"></div>
         </div>
-        <script src="code.js"></script> 
+        <script src="code.js"></script>      
         <!-- By placing the JavaScript at the bottom of the page we can ensure the rest of the page is loaded (and, more importantly, the DOM has been created) before the JavaScript begins its execution. -->
     </body>
 </html>
