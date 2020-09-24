@@ -1,19 +1,7 @@
 const currentGen = document.querySelector(".current-gen");
-let rows = 40;
-let columns = 60;
-
+let rows = 25;
+let columns = 40;
 let genCount = 0;
-
-// keep track of whether or not the game is playing
-let playing = false;
-// Set state of 2 grids - double-buffering
-let grid = new Array(rows);
-let nextGrid = new Array(rows)
-
-let timer;
-// reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
-let reproductionTime = 150; // 500 ms to for dev purposes; speed up to 100 later
-
 
 // allow user to change height of grid with btn click
 const heightBtn = document.getElementById("gridHeight");
@@ -22,7 +10,7 @@ heightBtn.addEventListener("submit", function(event) {
     const height = document.getElementById("height").value;
     console.log(height);
     console.log(event.target.value);
-    changeGridHeight(height)
+    changeGridHeight(height);
 })
 
 // allow user to change height of grid with btn click
@@ -34,6 +22,18 @@ widthBtn.addEventListener("submit", function(event) {
     console.log(event.target.value);
     changeGridWidth(width);
 })
+
+
+// keep track of whether or not the game is playing
+let playing = false;
+let timer;
+// reproductionTime controls speed in which the cells are changing; acts as a delay when we call the timer repeatedly
+let reproductionTime = 150; // 500 ms to for dev purposes; speed up to 100 later
+
+
+// Set state of 2 grids - double-buffering
+const grid = new Array(rows);
+const nextGrid = new Array(rows);
 
 // allow user to reset the grid to original size with btn click
 const resetBtn = document.getElementsByClassName("reset");
@@ -89,39 +89,37 @@ function initialize() {
 
 // Board Layout
 function createTable() {
-    let gridContainer = document.getElementById("gridContainer");
+    const gridContainer = document.getElementById("gridContainer");
     if (!gridContainer) {
         // throw error if it doesn't exist
         console.error("Problem: no div for the grid table!");
     }
 
-    let table = document.createElement("table");
+    const table = document.createElement("table");
 
     // outer loop will iterate through all the rows
     for (let i = 0; i < rows; i++) {
         // as we go through all the rows, we create a new one
         // The <tr> tag defines a row in an HTML table.
-        let tr = document.createElement("tr");
+        const tr = document.createElement("tr");
         // iterate through all the columns
         for (let j = 0; j < columns; j++) {
             // go through all the columns and create a new one
             // The <td> tag defines a standard data cell in an HTML table.
-            let cell = document.createElement("td");
+            const cell = document.createElement("td");
             // each cell needs a unique ID - adding ID by using row number and the column number
             // the underscore makes it easier to read row_col location
             cell.setAttribute("id", i + "_" + j);
             // Add CSS class to cell for styling
-            cell.setAttribute("class", "dead")
+            cell.setAttribute("class", "dead");
             // Add click handler for switching from Dead to Alive cells
             cell.onclick = cellClickHandler;
             // Add the tCol to the row (cell is the tCols)
             tr.appendChild(cell);
         }
-
         // Add the row element to the table; also ends outer loop
         table.appendChild(tr);
     }
-
     // Add table to grid container
     gridContainer.appendChild(table);
 }
@@ -129,12 +127,11 @@ function createTable() {
 // Click handler to change Dead to Alive and vice versa
 function cellClickHandler() {
     /* We click on a cell. With the split func, it separates the location by row and column - creating an array of 2 values. We use these variables to determine the row and the column for the cell in the model that corresponds to the cell in the view. */
-    let rowCol = this.id.split("_");
-    let rows = rowCol[0];
-    let columns = rowCol[1]
-    
+    const rowCol = this.id.split("_");
+    const rows = rowCol[0];
+    const columns = rowCol[1];
     // Get element class using getAttribute
-    let classes = this.getAttribute("class");
+    const classes = this.getAttribute("class");
     // Check to see in the class contains the string live
     /* If classes contains the string "live", then the result will be 0 because the index of the first letter, "l" is at position 0 in the classes string. If the string in classes was "not live", then the result would be 4. So we check for > -1 because the result can be 0 or greater.*/
     if (classes.indexOf("live") > -1) {
@@ -144,10 +141,9 @@ function cellClickHandler() {
         grid[rows][columns] = 0;
     } else {
         // if the selected cell is not live, switch it to live class attr
-        this.setAttribute("class", "live")
+        this.setAttribute("class", "live");
         // clicked on dead cell to make it live by setting state to 1
         grid[rows][columns] = 1;
-        
     }
 }
 
@@ -156,7 +152,7 @@ function cellClickHandler() {
 function updateView() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
-            let cell = document.getElementById(i + "_" + j);
+            const cell = document.getElementById(i + "_" + j);
             if (grid[i][j] == 0) {
                 cell.setAttribute("class", "dead");
             } else {
@@ -179,7 +175,7 @@ function changeGridHeight(height) {
 
 // when user changes width of grid, this resets the grid's width and creates new view
 function changeGridWidth(width) {
-    console.log("changeGridWidth", height);
+    console.log("changeGridWidth", width);
     columns = width;
     const resetContainer = document.getElementById("gridContainer");
     resetContainer.removeChild(resetContainer.firstChild);
@@ -191,8 +187,8 @@ function changeGridWidth(width) {
 // when user wants to revert to original size of the grid
 function resetEntireGrid() {
     console.log("resetEntireGrid");
-    rows = 40;
-    columns = 60;
+    rows = 25;
+    columns = 40;
     const resetContainer = document.getElementById("gridContainer");
     resetContainer.removeChild(resetContainer.firstChild);
     console.log(resetContainer.childNodes);
@@ -202,16 +198,46 @@ function resetEntireGrid() {
 
 function setupControlButtons() {
     // button to start
-    let startButton = document.getElementById("start");
+    const startButton = document.getElementById('start');
     startButton.onclick = startButtonHandler;
 
     // button to clear
-    let clearButton = document.getElementById("clear");
+    const clearButton = document.getElementById('clear');
     clearButton.onclick = clearButtonHandler;
 
     // button to choose random cells
-    let randomButton = document.getElementById("random");
+    const randomButton = document.getElementById('random');
     randomButton.onclick = randomButtonHandler;
+
+    // button to speed up
+    const speedupButton = document.getElementById("speed-btn");
+    speedupButton.onclick = speedBtnHandler;
+
+    // button to slow down
+    const slowdownButton = document.getElementById('slowdown');
+    slowdownButton.onclick = slowDownHandler;
+
+    // set state of glider
+    const gliderButton = document.getElementById('glider');
+    gliderButton.onclick = gliderHandler;
+
+    // set state of pulsar
+    const pulsarButton = document.getElementById('pulsar');
+    pulsarButton.onclick = pulsarHandler;
+
+    // Set state of Gosper Gun
+    // const gosperGunBtn = document.getElementById("gosper-gun");
+    // gosperGunBtn.onclick = gosperGunHandler;
+}
+
+function speedBtnHandler() {
+    console.log("Speeding up by 50 increments");
+    reproductionTime -= 50;
+}
+
+function slowDownHandler() {
+    console.log("Slowing down by 50 increments");
+    reproductionTime += 50;
 }
 
 function randomButtonHandler() {
@@ -219,9 +245,113 @@ function randomButtonHandler() {
     clearButtonHandler();
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
-            let isAlive = Math.round(Math.random());
+            const isAlive = Math.round(Math.random());
+            console.log("isAlive", isAlive);
             if (isAlive == 1) {
-                let cell = document.getElementById(i + "_" + j);
+            const cell = document.getElementById(i + "_" + j);
+            cell.setAttribute('class', 'live');
+            grid[i][j] = 1;
+            }
+        }
+    }
+}
+
+// Gosper Glider Gun Preset
+// function gosperGunHandler() {
+//     let gunPattern = [
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0],
+//         [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     ]
+
+//     for (let i = 0; i < rows; i++) {
+//         for (let j = 0; j < columns; j++) {
+//             const gosperGun = gunPattern[i][j];
+//             if (gosperGun == 1) {
+//                 const cell = document.getElementById(i + "_" + j);
+//                 cell.setAttribute("class", "live");
+//                 grid[i][j] = 1;
+//             }
+//         }
+//     }
+// }
+
+// Glider Cell Preset
+function gliderHandler() {
+    let gliderPattern = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+  
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            const glider = gliderPattern[i][j];
+            if (glider == 1) {
+            const cell = document.getElementById(i + "_" + j);
+            cell.setAttribute("class", "live");
+            grid[i][j] = 1;
+            }
+        }
+    }
+}
+
+function pulsarHandler() {
+    let pulsarPattern = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+  
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            const pulsar = pulsarPattern[i][j];
+            if (pulsar == 1) {
+                const cell = document.getElementById(i + "_" + j);
                 cell.setAttribute("class", "live");
                 grid[i][j] = 1;
             }
@@ -229,23 +359,26 @@ function randomButtonHandler() {
     }
 }
 
+
 function clearButtonHandler() {
     console.log("Clear the game: stop playing, clear the grid");
     /* we've cleared the game, meaning we're no longer playing so it needs to be set to false */
     playing = false;
+    genCount = 0;
     /* this is clear button rather than the start button; it clears the board and resets the start button */
-    let startButton = document.getElementById("start");
+    const startButton = document.getElementById("start");
     // set the start button's state to Start when Clear is clicked on
     startButton.innerHTML = "Start";
+    currentGen.innerHTML = `<h3 class="myGen">Current Generation: ${genCount}</h3>`;
 
     // To get the clear btn to actually clear the board, clear the timer
     // prevents play() from being called again; stops the game
     clearTimeout(timer);
 
     // clear the grid in the view by changing every alive cell in the table to have the class "dead"; get all cells with the class "live"
-    let cellsList = document.getElementsByClassName("live"); // nodelist
+    const cellsList = document.getElementsByClassName("live"); // nodelist
     // copy cells from the nodelist (cellsList) & push onto an array
-    let cells = [];
+    const cells = [];
     for (let i = 0; i < cellsList.length; i++) {
         cells.push(cellsList[i]);
     }
@@ -277,8 +410,10 @@ function startButtonHandler() {
 
 function play() {
     console.log("Play the game");
+    genCount++;
+    console.log(genCount);
+    currentGen.innerHTML = `<h3 class="myGen">Current generation: ${genCount}</h3>`;
     computeNextGen();
-
     // without this, the play button only goes 1 round
     // This block - play() calls itself by using a timer
     if (playing) { // check if game is actively running
@@ -293,8 +428,8 @@ Iterate through all the cells in the grid state and call the applyRules function
 */
 function computeNextGen() {
     for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < columns; j++) {
-            applyRules(i,j);
+        for (let j = 0; j < column; j++) {
+          applyRules(i, j);
         }
     }
 
@@ -324,7 +459,7 @@ function applyRules(row, column) {
             nextGrid[row][column] = 1;
         }   // if cell neighbor count is 4 or more, cell dies
             else if (numNeighbors > 3) {
-            nextGrid[row][column] = 0
+            nextGrid[row][column] = 0;
         }
     } else if (grid[row][column] == 0) { // checking count when cell is dead
         if (numNeighbors == 3) {
@@ -364,12 +499,12 @@ function countNeighbors(row, column) {
 
     // Check neighbors to the left
     if (column - 1 >= 0) {
-        if (grid[row][column - 1] == 1) count++
+        if (grid[row][column - 1] == 1) count++;
     }
 
     // Check neighbors to the right
     if (column + 1 < columns) {
-        if (grid[row][column + 1] == 1) count++
+        if (grid[row][column + 1] == 1) count++;
     }
 
     // Check neighbors directly below the cell
@@ -379,7 +514,7 @@ function countNeighbors(row, column) {
     
     // Check the neighbors below to the lower left of the cell
     if (row + 1 < rows && column - 1 >= 0) {
-        if (grid[row + 1][column - 1] == 1) count++
+        if (grid[row + 1][column - 1] == 1) count++;
     }
     
     // Check the neighbors below to the lower right of the cell
