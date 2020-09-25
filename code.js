@@ -23,7 +23,7 @@ widthButton.addEventListener('submit', function (event) {
 
 let playing = false;
 let timer;
-let reproductionTime = 300;
+let reproductionTime = 100;
 
 const grid = new Array(rows);
 const nextGrid = new Array(rows);
