@@ -315,7 +315,7 @@ function clearButtonHandler() {
   playing = false;
   genCount = 0;
   const startButton = document.getElementById('start');
-  startButton.innerHTML = 'start';
+  startButton.innerHTML = 'Start';
   currentGeneration.innerHTML = `
   <h3 class="myGen">Current Generation: ${genCount}</h3>
   `;
@@ -342,7 +342,7 @@ function startButtonHandler() {
   } else {
     console.log('Continue the game');
     playing = true;
-    this.innerHTML = 'pause';
+    this.innerHTML = 'Pause';
     play();
   }
 }
