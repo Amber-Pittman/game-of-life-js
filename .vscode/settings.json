@@ -1,9 +1,16 @@
 {
     "editor.fontLigatures": true,
     "cSpell.words": [
+        "changegridheight",
+        "changegridwidth",
+        "currentgen",
         "gosper",
         "gosper gun",
+        "gridheight",
+        "gridwidth",
         "gun",
-        "nodelist"
+        "nodelist",
+        "rowcol",
+        "zombifies"
     ]
 }
