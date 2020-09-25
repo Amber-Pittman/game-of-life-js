@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- FAVICON <link rel="icon" type="image/png" href="favicon.png" /> -->
-        <title>Game of Life</title>
-        <link rel="stylesheet" href="life.css">
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&family=VT323&family=Open+Sans&display=swap" rel="stylesheet">
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <title>The Game of Life</title>
+    <link rel="stylesheet" href="life.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Walter+Turncoat&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="title">
+        <h1>Conway's Game of Life</h1>
+      </div>
+      <!-- startup form to select grid size -->
 
-    <body>
-        <div class="main-container">
-            <div class="title">
-                <h1>Conway's Game of Life</h1>
-            </div>
-            <!-- startup form to select grid size -->
-        
-            <div class="section-container">
-                    <form id="gridHeight">
-                        <label for="height">Height: </label>
-                        <input type="number" id="height" name="height" min="25" max="90" />
-                        <button id="heightButton">Update</button>
-                    </form>
-                    <form id="gridWidth">
-                        <label for="width">Width <span>: </span> </label>
-                        <input type="number" id="width" name="width" min="25" max="90" />
-                        <button id="widthButton">Update</button>
-                    </form>
-                    <div class="resetButtonClass">
-                        <button class="reset">Reset Grid Size</button>
-                    </div>
-            
-                    <div id="gridContainer" class="yellow"></div>
-            </div>
-            <!-- buttons for controlling grid activity -->
-            <div class="controls">
-                    <button id="start">Start</button>
-                    <button id="clear">Clear</button>
-                    <button id="random">Random</button>
-                    <button id="speed-btn">Speed Up</button>
-                    <button id="slowdown">Slow Down</button>                
-                    <button id="glider">Glider</button>
-                    <button id="pulsar">Pulsar</button>
-                    <!-- <button id="gosper-gun">Gosper Gun</button> -->
-            </div>
-            <div class="current-gen"></div>
+      <div class="section-container">        
+        <div class="currentgen"></div>
+        <form id="gridheight">
+          <label for="height">Grid Height: </label>
+          <input type="number" id="height" name="height" min="25" max="90" />
+          <button id="heightButton">Update</button>
+        </form>
+        <form id="gridwidth">
+          <label for="width">Grid Width <span>:</span></label>
+          <input type="number" id="width" name="width" min="25" max="90" />
+          <button id="widthButton">Update</button>
+        </form>
+        <div class="resetButtonClass">
+          <button class="reset">Reset</button>
         </div>
-        <script src="code.js"></script>      
-        <!-- By placing the JavaScript at the bottom of the page we can ensure the rest of the page is loaded (and, more importantly, the DOM has been created) before the JavaScript begins its execution. -->
-    </body>
+
+        <div id="gridContainer" class="yellow"></div>
+      </div>
+      <!-- buttons for controlling grid activity -->
+      <div class="controls">
+        <button id="start">Start</button>
+        <button id="clear">Clear</button>
+        <button id="random">Random</button>
+        <button id="speedup">Faster</button>
+        <button id="slowdown">Slower</button>
+        <button id="glider">Glider</button>
+        <button id="pulsar">Pulsar</button>
+        <button id="gosper">Gosper Gun</button>
+      </div>
+    </div>
+    <script src="code.js"></script>
+  </body>
 </html>

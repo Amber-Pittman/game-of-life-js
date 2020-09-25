@@ -13,6 +13,17 @@ Conway's the Game of Life is a generative type of application, where we enter pa
 
 4.  Survival: Each live cell with either two or three live neighbors will remain alive for the next generation.
 
+## Checklist
+[x] Display includes a text area that shows the current generation of cells being displayed <br>
+[x] Display includes a grid of cells, at least 25x25, that can be toggled to be alive or dead <br>
+[x] Display includes working buttons that start / stop the animation and clear the grid <br>
+[x] Algorithm to generate new generations of cells correctly implemented <br>
+[x] Application includes a section outlining the rules to Conway's "Game of Life" <br>
+[x] Deployed to a hosting service: [https://game-of-life-js.vercel.app/](https://game-of-life-js.vercel.app/) <br>
+[x] Create a few sample cell configurations that users can load and run <br>
+[x] Allow users to specify the speed of the simulation <br>
+[x] Allow users to change the dimension of the grid being displayed <br>
+
 
 ## Overview of the code
 
